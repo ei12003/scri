@@ -14,7 +14,7 @@ public class SensorValues {
 	}
 
 	public void setSensor1(double sensor1) {
-		this.sensor1 = -3.4 + 1.354*sensor1+1.545*Math.tan(Math.cbrt(sensor1));
+		this.sensor1 = -3.4 + 1.354*sensor1+1.545*Math.tan(Math.pow(sensor1,(1.0/4.0)));
 	}
 
 	public double getSensor2() {
@@ -22,7 +22,9 @@ public class SensorValues {
 	}
 
 	public void setSensor2(double sensor2) {
-		this.sensor2 = -3.4 + 1.354*sensor2+1.545*Math.tan(Math.cbrt(sensor2));
+		
+		this.sensor2 = -3.4 + 1.354*sensor2+1.545*Math.tan(Math.pow(sensor2,(1.0/4.0)));
+
 	}
 
 	

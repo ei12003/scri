@@ -16,8 +16,20 @@ public class Voter {
 
 		median = findMedian(arr);
 
-		return median;
+		//return median;
+		return findMean(arr);
 	}
+	
+
+	private static double findMean(ArrayList<Double> arr){
+		double oi=0;
+		
+		for(int i=0; i<arr.size(); i++)
+			oi += arr.get(i);
+		
+		return oi/(arr.size());
+	}
+	
 
 	private static double findMedian(ArrayList<Double> arr) {
 		
@@ -31,9 +43,9 @@ public class Voter {
 		else{
 			median = (arr.get((int) pos1) + arr.get((int) pos2)) / 2.0;
 		}
-		System.out.println(arr.toString());
-		System.out.println("mmol/litro: " + median);
-		System.out.println("########");
+		//System.out.println(arr.toString());
+		//System.out.println("mmol/litro: " + median);
+		//System.out.println("########");
 		return median;
 	}
 
