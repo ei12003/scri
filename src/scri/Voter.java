@@ -12,10 +12,12 @@ public class Voter {
 		double median;
 
 		arr = getArraySorted(start, end, values);
-		Collections.sort(arr);
+		//Collections.sort(arr);
 
+		
+		//System.out.println(arr);
 		median = findMedian(arr);
-
+		
 		//return median;
 		return findMean(arr);
 	}
@@ -54,6 +56,7 @@ public class Voter {
 
 		ArrayList<Double> arr = new ArrayList<Double>();
 		int arr_index = 0;
+		int check = 0;
 
 		if (end > values.size()) {
 			end = values.size();
@@ -65,10 +68,25 @@ public class Voter {
 		for (int count = start; count <= end; count++) {
 			double s1 = values.get(count).getSensor1(), s2 = values.get(count)
 					.getSensor2();
-			if (s1 >= -3.4)
+
+			
+			if (s1 >= -3.4){
 				arr.add(values.get(count).getSensor1());
-			if (s2 >= -3.4)
+				check++;
+			}
+				
+			if (s2 >= -3.4){
 				arr.add(values.get(count).getSensor2());
+				check++;
+			}
+				
+			if(check == 0){
+				if(!(values.get(count).both_checked))
+					end +=1;
+				check = 0;
+			}
+				
+				
 		}
 
 		return arr;

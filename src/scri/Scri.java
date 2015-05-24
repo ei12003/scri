@@ -17,11 +17,14 @@ public class Scri {
 	static ArrayList<Double> g_list;
 	static BufferedWriter bw;
 	static double dg,ddg,ic,d;
+	static int both,pastboth;
 	
 	
 	public static void main(String[] args) throws IOException {
 		ReadInput input = new ReadInput("input");
 		double g;
+		both = 0;
+		pastboth=0;
 		g_list = new ArrayList<Double>();
 		values = input.getValues();
 		ic = 0;
@@ -32,6 +35,10 @@ public class Scri {
 			//System.out.println("count = "+count+"\\\\ values size = "+values.size());			
 			try {
 				g = Voter.getMmmoLit(count-29, count, values);
+				both = bothFailed(values,count-29,count);
+				if(both>0)
+					count += both;
+				both = 0;
 			} catch(Exception e) {
 				log("FAIL");
 				continue;
@@ -39,19 +46,26 @@ public class Scri {
 			g_list.add(g);
 		    
 			//System.out.println(lastThree());
-			System.out.println(g);
+			//System.out.println(g);
 			if (g_list.size() >= 10){
-				if(g < 6)
+				if(g < 6){
+					log("0 . < 6");
+					ic = 0;
+				}
 					//System.out.println(count+": NOT INJECTING (g < 6) "+g);
-					log("0");
+					
+					//System.out.print("");
 				
 				else {
 					
 					findDGDDG(3);
 					
-					if(dg < -0.4)
+					if(dg < -0.4){
 						//System.out.println(count+": NOT INJECTING (dg < -0.4) "+dg+"|"+ddg);
-						log("0");
+						log("0 . descending");
+						ic = 0;
+					}
+						
 					else {
 						
 						//d = 0.8*g + 0.2*dg + 0.5*ddg-ic(n-1)
@@ -59,8 +73,9 @@ public class Scri {
 						d = 0.8*g + 0.2*dg + 0.5*ddg-ic;
 						d=Math.floor(d);
 						ic = d + 0.9*ic;
-						//log(Double.toString(d));
-						//System.out.println(count+": INJECTING "+d+" (dg > -0.4) "+dg+"|"+ddg);
+						log(Double.toString(d));
+						if(d<0)
+							System.out.println(count+": INJECTING "+d+" (dg > -0.4) "+dg+"|"+ddg);
 	//					bw.write(Double.toString(d));
 						
 					}
@@ -78,6 +93,47 @@ public class Scri {
 	
 	
 	
+	private static int bothFailed(ArrayList<SensorValues> values2,int start, int end) {
+
+		int ctr = 0;
+		int check = 0;
+
+		if (end > values.size()) {
+			end = values.size();
+			start = end - 29;
+		}
+		if (start < 0)
+			start = 0;
+
+		for (int count = start; count <= end; count++) {
+			double s1 = values.get(count).getSensor1(), s2 = values.get(count)
+					.getSensor2();
+			
+			if (s1 >= -3.4)
+				check++;
+				
+			if (s2 >= -3.4)
+				check++;
+				
+			if(check == 0){
+				if(!(values.get(count).both_checked)){
+					ctr++;
+					values.get(count).both_checked = true;
+				}
+					
+				check = 0;
+			}
+				
+				
+		}
+		
+		
+		
+		return ctr-pastboth;
+	}
+
+
+
 	private static String lastThree(){
 		int size = g_list.size();
 		if(size == 1)

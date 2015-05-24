@@ -3,10 +3,12 @@ package scri;
 public class SensorValues {
 
 	double sensor1,sensor2;
+	boolean both_checked;
 
 	public SensorValues(){
 		this.sensor1 = -3.5;
 		this.sensor2 = -3.5;
+		this.both_checked = false;
 	}
 	
 	public double getSensor1() {

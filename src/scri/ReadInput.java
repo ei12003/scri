@@ -27,7 +27,7 @@ public class ReadInput {
 		SensorValues sensorValues;
 		double sensor1, sensor2;
 		int ls1c = 0, ls2c = 0;
-		double ls1 = -1, ls2 = -1;
+		double ls1 = -1, ls2 = -1, lsv1 = -1, lsv2 =-1;
 		boolean isValid;
 
 		try {
@@ -38,7 +38,7 @@ public class ReadInput {
 
 				aux = line.split(" ");
 				sensorValues = new SensorValues();
-
+				isValid = true;
 				try {					
 					sensor1 = Double.parseDouble(aux[0]);
 					if (sensor1 >= 1) {
@@ -46,53 +46,55 @@ public class ReadInput {
 							ls1c++;
 							if (ls1c >= STUCK_CONSTANT)
 								isValid = false;
-							else
-								isValid = true;
 						}
-						else if(ls1 > 0 && Math.abs((ls1-sensor1))>=RANDOM_CONSTANT)
+						if(lsv1 > 0 && Math.abs((ls1-sensor1))>=RANDOM_CONSTANT)
 							isValid = false;
-						else{
-							ls1 = sensor1;
-							ls1c = 0;
-							isValid = true;
-						}
+						
 							
 					} 
 					else
 						isValid = false;
-					if (isValid)
+					
+					if (isValid){
+						lsv1 = sensor1;
+						ls1c = 0;
 						sensorValues.setSensor1(sensor1);
+					}
+						
 					else
 						discarded(sensor1);
+					ls1 = sensor1;
 					
 				} catch (Exception e) {
 
 				}
-
-				try {
+				isValid = true;
+				try {					
 					sensor2 = Double.parseDouble(aux[1]);
 					if (sensor2 >= 1) {
 						if (sensor2 == ls2) {
 							ls2c++;
 							if (ls2c >= STUCK_CONSTANT)
 								isValid = false;
-							else
-								isValid = true;
-						} 
-						else if(ls2 > 0 && Math.abs((ls2-sensor2))>=RANDOM_CONSTANT)
-							isValid = false;
-						else{
-							ls2 = sensor2;
-							ls2c = 0;
-							isValid = true;
 						}
-					} else
+						if(lsv2 > 0 && Math.abs((ls2-sensor2))>=RANDOM_CONSTANT)
+							isValid = false;
+						
+							
+					} 
+					else
 						isValid = false;
-
-					if (isValid)
+					
+					if (isValid){
+						lsv2 = sensor2;
+						ls2c = 0;
 						sensorValues.setSensor2(sensor2);
+					}
+						
 					else
 						discarded(sensor2);
+					ls2 = sensor2;
+					
 				} catch (Exception e) {
 
 				}
