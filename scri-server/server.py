@@ -14,10 +14,9 @@ def addFile():
       data = data[:-1]
     
     files.append(data);
-    print data;
     if len(files) == 3:
       vote()
-    print data
+    print len(files)
     return ""
 
 
@@ -39,20 +38,23 @@ def vote():
       files_ = [];
       
       
-      
-      
-      
       if i < len(files[0]) and f0:
 	if files[0][i] != FAIL:
 	  files_.append(files[0][i])
+	else:
+	  f0 = 0
 	       
       if (i < len(files[1])) and f1 :
 	if files[1][i] != FAIL:
 	  files_.append(files[1][i])
+	else:
+	  f1 = 0
       
       if i < len(files[2]) and f2:
 	if files[2][i] != FAIL:
 	  files_.append(files[2][i])
+	else:
+	  f2 = 0
 	       
       value = decide(files_)
       
@@ -62,7 +64,7 @@ def vote():
       votes.append(str(value)+"\n")
 
   votes.append("END")
-
+  print "End"
   with open("final_decision", 'w') as file_:
             for vote in votes:
                 file_.write(vote)
