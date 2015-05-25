@@ -2,7 +2,7 @@ import random, time, string, time
 
 f = open('output' + time.strftime("%Y%M%d%H%M%S"),'a+')
 
-for i in xrange(201):
+for i in xrange(30000):
       error = random.randint(0,1000)
       error_aux = random.randint(0,2)
       error_aux_aux = random.randint(2, 4)
